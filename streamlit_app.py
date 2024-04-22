@@ -3,8 +3,26 @@ import numpy as np
 import pandas as pd
 import streamlit as st
 
+from openai import OpenAI
+client = OpenAI(api_key='')
+
+
+prompt = st.text_input("Enter a prompt")
+if prompt:
+    response = client.chat.completions.create(
+        model="gpt-3.5-turbo",
+        messages=[{"role": "system", "content": "You are a helpful assistant."},
+                {"role": "user", "content": prompt}],
+        max_tokens=100,
+        n=1,
+        stop=None,  
+        temperature=0.7,
+    )
+    st.write(response.choices[0].message.content)
+
+
 """
-# Welcome to Streamlit!
+# Welcome to Streamlit! This is my home!
 
 Edit `/streamlit_app.py` to customize this app to your heart's desire :heart:.
 If you have any questions, checkout our [documentation](https://docs.streamlit.io) and [community
